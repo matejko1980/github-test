@@ -321,3 +321,71 @@ require get_template_directory() . '/inc/template-tags.php';
  * Customizer additions.
  */
 require get_template_directory() . '/inc/customizer.php';
+
+
+
+
+
+
+/*
+* Creating a function to create our CPT
+*/
+ 
+function custom_post_type() {
+ 
+// Set UI labels for Custom Post Type
+    $labels = array(
+        'name'                => _x( 'Apartamenty', 'Post Type General Name', 'twentynineteen' ),
+        'singular_name'       => _x( 'Apartament', 'Post Type Singular Name', 'twentynineteen' ),
+        'menu_name'           => __( 'Apartamenty', 'twentynineteen' ),
+        'parent_item_colon'   => __( 'Parent Apartament', 'twentynineteen' ),
+        'all_items'           => __( 'Wszystkie Apartamenty', 'twentynineteen' ),
+        'view_item'           => __( 'Zobacz Apartamenty', 'twentynineteen' ),
+        'add_new_item'        => __( 'Dodaj nowy Apartament', 'twentynineteen' ),
+        'add_new'             => __( 'Dodaj nowy', 'twentynineteen' ),
+        'edit_item'           => __( 'Edytuj Apartament', 'twentynineteen' ),
+        'update_item'         => __( 'Aktualizuj Apartament', 'twentynineteen' ),
+        'search_items'        => __( 'Szukaj Apartamentu', 'twentynineteen' ),
+        'not_found'           => __( 'Nie znaleziono', 'twentynineteen' ),
+        'not_found_in_trash'  => __( 'Nie znaleziono w koszu', 'twentynineteen' ),
+    );
+     
+// Set other options for Custom Post Type
+     
+    $args = array(
+        'label'               => __( 'appartment', 'twentynineteen' ),
+        'description'         => __( 'Apartamenty', 'twentynineteen' ),
+        'labels'              => $labels,
+        // Features this CPT supports in Post Editor
+        'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'comments', 'revisions', 'custom-fields', ),
+        // You can associate this CPT with a taxonomy or custom taxonomy. 
+        'taxonomies'          => array( 'genres' ),
+        /* A hierarchical CPT is like Pages and can have
+        * Parent and child items. A non-hierarchical CPT
+        * is like Posts.
+        */ 
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'can_export'          => true,
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+    );
+     
+    // Registering your Custom Post Type
+    register_post_type( 'appartment', $args );
+ 
+}
+ 
+/* Hook into the 'init' action so that the function
+* Containing our post type registration is not 
+* unnecessarily executed. 
+*/
+ 
+add_action( 'init', 'custom_post_type', 0 );
