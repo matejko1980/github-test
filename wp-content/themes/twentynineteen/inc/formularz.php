@@ -15,8 +15,9 @@ if (!$_GET["action"]){
 function formularz_kontaktowy_function(){
 
 	// define variables and set to empty values
-	$nameErr = $emailErr = "";
-	$name = $email = $gender = $comment = $website = "";
+	$actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	$commentErr = $emailErr = "";
+	$firstname = $email = $surname = $comment = "";
 
 	function test_input($data) {
             $data = trim($data);
@@ -26,6 +27,7 @@ function formularz_kontaktowy_function(){
     }
 	
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
 	  
 	  if (empty($_POST["email"])) {
 		$emailErr = "E-mail jest wymagany";
@@ -49,6 +51,7 @@ function formularz_kontaktowy_function(){
 
 	
 		//wysyłanie formularza
+
 		if (!$form_errors){
 			
 			$to = "maciek@mammothdesign.pl";
@@ -83,23 +86,21 @@ function formularz_kontaktowy_function(){
 			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 			
 			// More headers
-			$headers .= 'From: <webmaster@example.com>' . "\r\n";
+			$headers .= 'From: <admin@mammothdesign.pl>' . "\r\n";
 
 			mail($to,$subject,$message,$headers);
 
-		}else{
-			echo ('są błedy');
-		}	
-
+			echo ('<p class="contact_form__succes">Formularz został wysłany.</p>');
+		}
 	}
 	
-	$actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+	
 
 	echo'	
-	<form method="post" action="'.$actual_link.'">
+	<form method="post" action="'.$actual_link.'" class="contact_form" enctype="multipart/form-data">
 
 		<fieldset class="contact_form__input-group">
-            <input class="contact_form__txt-input" id="first_name_30" maxlength="100" name="name" type="text" value="'.$name.'">
+            <input class="contact_form__txt-input" id="first_name_30" maxlength="100" name="firstname" type="text" value="'.$firstname.'">
             <label class="contact_form__txt-label" for="first_name_30">Imię</label>
         </fieldset>
 
@@ -109,24 +110,23 @@ function formularz_kontaktowy_function(){
         </fieldset>
 
 		<fieldset class="contact_form__input-group">
-            <input class="contact_form__txt-input" id="first_name_30" maxlength="100" name="email" required="" type="text" value="'.$email.'">
+            <input class="contact_form__txt-input" id="first_name_30" maxlength="100" name="email" type="text" value="'.$email.'">
             <label class="contact_form__txt-label" for="first_name_30">E-mail*</label>
 			<span class="error">'.$emailErr.'</span>
         </fieldset>
 		
 		<fieldset class="contact_form__input-group answer">
-            <textarea class="contact_form__txt-input" cols="40" id="answer_30" maxlength="20000" name="comment" required="" rows="10">'.$comment.'</textarea>
+            <textarea class="contact_form__txt-input" cols="40" id="answer_30" maxlength="20000" name="comment" rows="10">'.$comment.'</textarea>
             <label class="contact_form__txt-label" for="answer_30">Treść</label>
 			<span class="error">'.$commentErr.'</span>
         </fieldset>
 		
-		<p><span class="error">* pole wymagane</span></p>
-		<input type="submit" name="submit" value="Submit"> 
-	   
+		<p><span class="info">* pole wymagane</span></p>
+		<fieldset class="contact_form__input-group answer">
+			<input type="submit" name="submit" value="Wyślij formularz"> 
+		</fieldset>
 	</form>';
 };
 
-
-add_shortcode( 'formularz_kontaktowy', 'formularz_kontaktowy_function' );
-
 };
+add_shortcode( 'formularz_kontaktowy', 'formularz_kontaktowy_function' );
