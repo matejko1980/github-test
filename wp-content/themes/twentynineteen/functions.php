@@ -322,7 +322,10 @@ require get_template_directory() . '/inc/template-tags.php';
  */
 require get_template_directory() . '/inc/customizer.php';
 
-
+/*
+* Stworzenie własnego shortcode formularz_kontaktowy
+*/
+require get_template_directory() . '/inc/formularz.php';
 
 
 
@@ -392,108 +395,3 @@ add_action( 'init', 'custom_post_type', 0 );
 
 
 
-/*
-* Stworzenie własnego shortcode
-*/
-
-function formularz_kontaktowy_function(){
-
-	// define variables and set to empty values
-	$nameErr = $emailErr = "";
-	$name = $email = $gender = $comment = $website = "";
-
-	function test_input($data) {
-            $data = trim($data);
-            $data = stripslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
-    }
-	
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	  
-	  if (empty($_POST["email"])) {
-		$emailErr = "E-mail jest wymagany";
-		$form_errors = "yes";
-	  } else {
-		$email = test_input($_POST["email"]);
-		// check if e-mail address is well-formed
-		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		  $emailErr = "Niepoprawny format e-mail";
-		  $form_errors = "yes";
-		}
-	  }
-
-	  if (empty($_POST["comment"])) {
-		$commentErr = "Treść jest wymagana";
-		$comment = "";
-		$form_errors = "yes";
-	  } else {
-		$comment = test_input($_POST["comment"]);
-	  }
-
-	
-		//wysyłanie formularza
-		if (!$form_errors){
-			
-			$to = "maciek@mammothdesign.pl";
-			$subject = "HTML email";
-			
-			$message = '
-			<html>
-			<head>
-			<title>Wiadomość</title>
-			</head>
-			<body>
-			<table>
-			<tr>
-			<th>Imię</th>
-			<th>Nazwisko</th>
-			<th>E-mail</th>
-			<th>Treść</th>
-			</tr>
-			<tr>
-			<td>'.$name.'</td>
-			<td>'.$surname.'</td>
-			<td>'.$email.'</td>
-			<td>'.$comment.'</td>
-			</tr>
-			</table>
-			</body>
-			</html>
-			';
-			
-			// Always set content-type when sending HTML email
-			$headers = "MIME-Version: 1.0" . "\r\n";
-			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-			
-			// More headers
-			$headers .= 'From: <webmaster@example.com>' . "\r\n";
-
-			mail($to,$subject,$message,$headers);
-
-		}else{
-			echo ('są błedy');
-		}	
-
-	}
-	
-	$actual_link = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-
-	echo'	
-	<p><span class="error">* pole wymagane</span></p>
-	<form method="post" action="'.$actual_link.'">  
-	  Imię: <input type="text" name="name" value="'.$name.'">
-	  <br><br>
-	  Nazwisko: <input type="text" name="surname" value="'.$surname.'">
-	  <br><br>
-	  E-mail*: <input type="text" name="email" value="'.$email.'">
-	  <span class="error">'.$emailErr.'</span>
-	  <br><br>
-	  Treść*: <textarea name="comment" rows="5" cols="40">'.$comment.'</textarea>
-	  <span class="error">'.$commentErr.'</span>
-	  <br><br>
-	  <input type="submit" name="submit" value="Submit">  
-	</form>';
-};
-
-add_shortcode( 'formularz_kontaktowy', 'formularz_kontaktowy_function' );

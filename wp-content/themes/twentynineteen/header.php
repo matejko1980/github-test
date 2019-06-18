@@ -41,13 +41,15 @@
 <body <?php body_class(); ?>>
 
 <div class="side side-adress">
-	<p><a href="#">booking@balticparkmolo.pl</a> t. +48 40 40 400</p>
+	<?php echo get_post_meta( 2, 'fixed_adress', true ); ?>
 </div>
+
+
 	
 <div class="side side-social">
-	<a href="#"><img src="<?php echo includes_url(); ?>/img/facebook.svg" /></a>
-	<a href="#"><img src="<?php echo includes_url(); ?>/img/twitter.svg" /></a>
-	<a href="#"><img src="<?php echo includes_url(); ?>/img/instagram.svg" /></a>
+	<a href="<?php echo get_post_meta( 2, 'social_fb_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/facebook.svg" /></a>
+	<a href="<?php echo get_post_meta( 2, 'social_tw_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/twitter.svg" /></a>
+	<a href="<?php echo get_post_meta( 2, 'social_i_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/instagram.svg" /></a>
 </div>		
 
 
@@ -55,8 +57,8 @@
 	
 
 	<header>			
-		<a class="header-logo"></a>
-		<span class="header-sentence">Book your<br>stay now</span>
+		<a class="header-logo"><img src="<?php echo includes_url(); ?>/img/logo.png" /></a>
+		<span class="header-sentence"><?php echo get_post_meta( 2, 'slogan', true ); ?></span>
 		<div class="header-mobilemenu--open">
 			<div class="bars">
 				<span class="poz1"></span>

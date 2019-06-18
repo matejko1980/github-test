@@ -19,9 +19,9 @@
 	
 		<div class="footer-content">
 			<div class="footer-content--socials">
-				<a href="#"><img src="<?php echo includes_url(); ?>/img/facebook.svg" /></a>
-				<a href="#"><img src="<?php echo includes_url(); ?>/img/twitter.svg" /></a>
-				<a href="#"><img src="<?php echo includes_url(); ?>/img/instagram.svg" /></a>
+				<a href="<?php echo get_post_meta( 2, 'social_fb_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/facebook.svg" /></a>
+				<a href="<?php echo get_post_meta( 2, 'social_tw_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/twitter.svg" /></a>
+				<a href="<?php echo get_post_meta( 2, 'social_in_url', true ); ?>"><img src="<?php echo includes_url(); ?>/img/instagram.svg" /></a>
 			</div>
 	
 			<div class="footer-content--menu">
@@ -32,7 +32,7 @@
 			</div>
 			
 			<div class="footer-content--copy">
-				<p>zdrojowa invwest & zdrojowa hotels &copy; 2017</p>
+				<p><?php echo get_post_meta( 2, 'podpis_footer', true ); ?></p>
 			</div>
 			
 		</div>
