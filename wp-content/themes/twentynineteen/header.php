@@ -25,12 +25,12 @@
 	<script type="text/javascript">	
 		$( document ).ready(function() {
 			
-			$('.header-mobilemenu--open').click(function() {
-			  $('.menu-menu_top-container').addClass('menu-menu_top-container--active');
+			$('header .header-mobilemenu--open').click(function() {
+			  $('header .menu-menu_top-container').addClass('menu-menu_top-container--active');
 			});
 			
-			$('.header-mobilemenu--close').click(function() {
-			  $('.menu-menu_top-container').removeClass('menu-menu_top-container--active');
+			$('header .header-mobilemenu--close').click(function() {
+			  $('header .menu-menu_top-container').removeClass('menu-menu_top-container--active');
 			});
 	
 		});
